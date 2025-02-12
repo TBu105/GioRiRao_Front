@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import authApi from "../../features/authentication/authApi"
 import { useNavigate } from "react-router-dom"
+import { ShoppingCart } from "lucide-react"
 
 interface IFormData {
   email: string
@@ -38,57 +39,57 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-800">
+      <div className="bg-gray-800 p-8 rounded-lg w-full max-w-sm">
+        <div className="flex justify-center mb-6">
+          <ShoppingCart className="w-24 h-24 text-white" />
+        </div>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-8 mt-10  ">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="email"
-            >
-              EMAIL
-            </label>
+            ></label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border border-white rounded w-full py-2 px-3 bg-gray-800 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-white"
               id="email"
               name="email"
               type="text"
-              placeholder="Email"
+              placeholder="EMAIL"
               value={formData.email}
               onChange={handleChange}
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-10">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="password"
-            >
-              PASSWORD
-            </label>
+            ></label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border border-white rounded w-full py-2 px-3 bg-gray-800 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-white"
               id="password"
               name="password"
               type="password"
-              placeholder="******************"
+              placeholder="PASSWORD"
               value={formData.password}
               onChange={handleChange}
             />
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-4">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="w-full bg-white text-black font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-300 hover:bg-gray-200"
               type="submit"
             >
               LOGIN
             </button>
-            <a
-              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-              href="#"
-            >
-              Forgot password?
-            </a>
+            <div className="flex justify-end">
+              <a
+                className="font-bold text-sm text-white hover:text-gray-300"
+                href="#"
+              >
+                Forgot password?
+              </a>
+            </div>
           </div>
         </form>
       </div>
