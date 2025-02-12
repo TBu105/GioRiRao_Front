@@ -4,11 +4,15 @@ interface DrinkProps {
   thumbnail: string
   name: string
   price: number
+  onClick?: () => void
 }
 
-const DrinkItem = ({ thumbnail, name, price }: DrinkProps) => {
+const DrinkItem = ({ thumbnail, name, price, onClick }: DrinkProps) => {
   return (
-    <div className="bg-gray-900 rounded-xl p-4 flex flex-col items-center">
+    <div
+      onClick={onClick}
+      className="bg-gray-900 rounded-xl p-4 flex flex-col items-center"
+    >
       {/* Image */}
       <div className="w-24 h-24 mb-3 overflow-hidden rounded-full">
         <img

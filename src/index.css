@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Add this in your global CSS file */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Hides scrollbar for Chrome, Safari */
+}
+
+.hide-scrollbar {
+  scrollbar-width: none; /* Hides scrollbar for Firefox */
+}
+
+.box-shadow-custom {
+  box-shadow: rgba(247, 0, 0, 0.35) 0px 8px 15px;
+}

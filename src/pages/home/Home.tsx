@@ -2,12 +2,21 @@ import React from "react"
 import CategoriesList from "../../features/drinks/components/CategoriesList"
 import DrinksList from "../../features/drinks/components/DrinksList"
 import SearchBar from "./SearchBar"
-import CartItem from "../../features/cart/CartItem"
+import CartItem from "../../features/cart/components/CartItem"
 import formattedDate from "../../utils/getCurrentDate"
+import { useAppSelector } from "../../app/hooks"
+import { selectIsDrinkDetailOpen } from "../../features/drinks/drinkSlice"
+import DrinkDetail from "../../features/drinks/components/DrinkDetail"
+import CartList from "../../features/cart/components/CartList"
+import { selectIsCartComfirmationOpen } from "../../features/cart/cartSlice"
+import CartComfirmation from "../../features/cart/components/CartComfirmation"
 
 const Home = () => {
+  const isDrinkDetailOpen = useAppSelector(selectIsDrinkDetailOpen)
+  const isCartComfirmationOpen = useAppSelector(selectIsCartComfirmationOpen)
+
   return (
-    <div className="p-6">
+    <div className="p-6 ">
       <div className="max-w-7xl mx-auto grid grid-cols-[1fr,400px] gap-8">
         <div>
           <header className="mb-8">
@@ -26,45 +35,10 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="bg-gray-900 p-6 rounded-lg">
-          <div className="flex gap-4 mb-6">
-            <button className="flex-1 bg-rose-400 text-white py-2 rounded-lg">
-              Stay
-            </button>
-            <button className="flex-1 text-gray-400 py-2 rounded-lg">
-              To Go
-            </button>
-            <button className="flex-1 text-gray-400 py-2 rounded-lg">
-              Delivery
-            </button>
-          </div>
+        {isDrinkDetailOpen && <DrinkDetail />}
+        {isCartComfirmationOpen && <CartComfirmation />}
 
-          <div className="mb-6">
-            <div className="flex justify-between mb-4">
-              <h2 className="text-lg font-medium">Orders #34562</h2>
-              <select className="bg-gray-800 rounded px-2 py-1">
-                <option>Stay</option>
-              </select>
-            </div>
-
-            <CartItem
-              title="Spicy seasoned seafood noodles"
-              price="2.29"
-              quantity={2}
-              note="Please, just a little bit spicy only."
-            />
-          </div>
-
-          <div className="mt-auto">
-            <div className="flex justify-between mb-4">
-              <span className="text-gray-400">Sub total</span>
-              <span className="text-white">$21.04</span>
-            </div>
-            <button className="w-full bg-rose-400 text-white py-3 rounded-lg">
-              Continue to Payment hehe
-            </button>
-          </div>
-        </div>
+        <CartList />
       </div>
     </div>
   )

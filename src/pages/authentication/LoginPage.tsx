@@ -1,23 +1,62 @@
-import React from "react"
+import React, { useState } from "react"
+import authApi from "../../features/authentication/authApi"
+import { useNavigate } from "react-router-dom"
+
+interface IFormData {
+  email: string
+  password: string
+}
 
 const LoginPage: React.FC = () => {
+  const navigate = useNavigate()
+
+  const [formData, setFormData] = useState<IFormData>({
+    email: "",
+    password: "",
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData({
+      ...formData,
+      [name]: value,
+    })
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    try {
+      await authApi.loginAdmin(formData.email, formData.password)
+
+      localStorage.setItem("isAuthenticated", "true")
+
+      navigate("/")
+    } catch (error) {
+      console.error("Login failed:", error)
+    }
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
+              htmlFor="email"
             >
-              USERNAME
+              EMAIL
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
+              id="email"
+              name="email"
               type="text"
-              placeholder="Username"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
             />
           </div>
           <div className="mb-6">
@@ -30,14 +69,17 @@ const LoginPage: React.FC = () => {
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
+              name="password"
               type="password"
               placeholder="******************"
+              value={formData.password}
+              onChange={handleChange}
             />
           </div>
           <div className="flex items-center justify-between">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
+              type="submit"
             >
               LOGIN
             </button>
