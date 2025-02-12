@@ -11,7 +11,7 @@ const DrinkItem = ({ thumbnail, name, price, onClick }: DrinkProps) => {
   return (
     <div
       onClick={onClick}
-      className="bg-gray-900 rounded-xl p-4 flex flex-col items-center"
+      className="bg-gray-900 rounded-lg p-4 flex flex-col items-center"
     >
       {/* Image */}
       <div className="w-24 h-24 mb-3 overflow-hidden rounded-full">
