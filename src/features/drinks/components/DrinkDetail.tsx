@@ -35,7 +35,7 @@ const DrinkDetail = () => {
 
   useEffect(() => {
     async function loadDrinkDetail() {
-      const drink = await drinkApi.getDrinkDetail(drinkId)
+      const drink = await drinkApi.getDrinkDetail(drinkId ? drinkId : "")
       // console.log("drink", drink)
       setDrinkDetail(drink)
     }
@@ -64,7 +64,7 @@ const DrinkDetail = () => {
   }
 
   const handleDrinkPrice = (priceIndex: number) => {
-    console.log("are you running", priceIndex)
+    // console.log("are you running", priceIndex)
     dispatch(updatePriceIndex({ drinkId, priceIndex }))
   }
 

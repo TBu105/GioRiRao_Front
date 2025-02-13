@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Search } from "lucide-react"
 import { ITopping } from "../toppingTypes"
-import toppingApi from "../toppignApi"
+import toppingApi from "../toppingApi"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { selectDrinkId } from "../../drinks/drinkSlice"
 import { addTopping } from "../../cart/cartSlice"
@@ -16,7 +16,7 @@ const ToppingsList = () => {
   useEffect(() => {
     const fetchToppings = async () => {
       const toppings = await toppingApi.getAllToppings()
-      console.log("toppings ToppingsList", toppings)
+      // console.log("toppings ToppingsList", toppings)
       setToppings(toppings)
     }
 
