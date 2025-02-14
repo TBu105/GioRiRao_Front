@@ -17,20 +17,23 @@ const ToppingsList = () => {
   useEffect(() => {
     const fetchToppings = async () => {
       const toppings = await toppingApi.getAllToppings()
-      // console.log("toppings ToppingsList", toppings)
       setToppings(toppings)
     }
 
     fetchToppings()
   }, [])
+
   const handleClose = () => {
     dispatch(setIsDrinkDetailOpen(false))
   }
   const handleAddTopping = (topping: ITopping) => {
     dispatch(addTopping({ drinkId, topping }))
   }
-  const handleRemoveCartItem = (drinkId: string) => {
-    dispatch(removeCartItem({ drinkId }))
+  const handleRemoveCartItem = () => {
+    if (drinkId) {
+      dispatch(removeCartItem({ drinkId }))
+      dispatch(setIsDrinkDetailOpen(false))
+    }
   }
 
   return (
@@ -71,7 +74,7 @@ const ToppingsList = () => {
         {/* Nút Back */}
         <button
           className="w-2/5 bg-gray-800 border-2 border-red-500 px-6 py-3 rounded-md text-white text-lg font-semibold hover:bg-red-600 transition"
-          onClick={}
+          onClick={handleRemoveCartItem}
         >
           Back
         </button>
