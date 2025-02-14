@@ -1,9 +1,42 @@
 import { Check } from "lucide-react"
 import React, { useState } from "react"
 import { methods } from "../staticData"
+import orderApi from "../../order/orderApi"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import {
+  removeCartList,
+  selectCartItems,
+  selectCartTotalPrice,
+  setIsCartComfirmationOpen,
+  setIsPaymentSuccessOpen,
+} from "../cartSlice"
+import convertCartItemsToOrderDetails from "../../../utils/transformCarItemToOrderDetail"
 
 const CartPaymentMethod = () => {
+  const cartList = useAppSelector(selectCartItems)
+  const cartTotalPrice = useAppSelector(selectCartTotalPrice)
+  const dispatch = useAppDispatch()
   const [selectedMethod, setSelectedMethod] = useState("Cash")
+
+  const handleComfirmPayment = async () => {
+    const items = convertCartItemsToOrderDetails(cartList)
+    const order = {
+      createdBy: "677fa3d96ee79a6d5eed1f41",
+      storeId: "6780d1c957dfc98e89675b55",
+      items,
+      paymentMethod: selectedMethod as "Cash" | "CARD" | "MOBILE_PAYMENT",
+      total: cartTotalPrice,
+    }
+    const newOrder = await orderApi.createOrder(order)
+    if (newOrder) {
+      console.log("are you running", newOrder)
+      dispatch(setIsCartComfirmationOpen({ isOpen: false }))
+      dispatch(setIsPaymentSuccessOpen({ isOpen: true }))
+      dispatch(removeCartList())
+    } else {
+      console.log("why you wrong", newOrder)
+    }
+  }
 
   return (
     <div className="flex flex-col justify-between h-full">
@@ -43,7 +76,10 @@ const CartPaymentMethod = () => {
         <button className="w-[48%] bg-gray-400 hover:bg-gray-500 h-10 rounded-lg mr-2">
           Back
         </button>
-        <button className="w-[48%] bg-red-400 hover:bg-rose-400 h-10 rounded-lg box-shadow-custom">
+        <button
+          className="w-[48%] bg-red-400 hover:bg-rose-400 h-10 rounded-lg box-shadow-custom"
+          onClick={handleComfirmPayment}
+        >
           Comfirm Payment
         </button>
       </div>

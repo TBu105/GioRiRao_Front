@@ -42,6 +42,10 @@ const DrinksList = () => {
     dispatch(setIsDrinkDetailOpen(true))
 
     const drinkDetail = await drinkApi.getDrinkDetail(drinkId)
+    const convertDrinkDetail = {
+      drinkId: drinkDetail._id,
+      
+    }
     dispatch(
       createCart({
         drink: drinkDetail,

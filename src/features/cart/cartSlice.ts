@@ -1,25 +1,12 @@
 import { createAppSlice } from "../../app/createAppSlice"
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { IDrink } from "../drinks/drinkTypes"
 import { ITopping } from "../topping/toppingTypes"
-import { RootState } from "../../app/store"
-import CartItem from "./components/CartItem"
-
-// type
-interface ICarItem {
-  drink?: IDrink | null
-  quantity?: number
-  note?: string
-  price?: number
-  toppings: ITopping[]
-  priceIndex?: number
-}
-
-// end type
+import { ICarItem } from "./cartType"
 
 export interface CartSliceState {
   cartItems: ICarItem[]
   isCartComfirmationOpen: boolean
+  isPaymentSuccessOpen: boolean
 }
 
 const loadCartState = () => {
@@ -35,6 +22,7 @@ const saveCartState = (state: ICarItem[] | null) => {
 const initialState: CartSliceState = {
   cartItems: loadCartState(),
   isCartComfirmationOpen: false,
+  isPaymentSuccessOpen: false,
 }
 
 export const cartSlice = createAppSlice({
@@ -191,15 +179,34 @@ export const cartSlice = createAppSlice({
 
         state.isCartComfirmationOpen = isOpen
 
-        console.log(
-          "payload setIsCartComfirmationOpen",
-          state.isCartComfirmationOpen,
-        )
+        // console.log(
+        //   "payload setIsCartComfirmationOpen",
+        //   state.isCartComfirmationOpen,
+        // )
       },
     ),
+    setIsPaymentSuccessOpen: create.reducer(
+      (state, action: PayloadAction<{ isOpen: boolean }>) => {
+        const { isOpen } = action.payload
+
+        state.isPaymentSuccessOpen = isOpen
+
+        // console.log(
+        //   "payload isPaymentSuccessOpen",
+        //   state.isPaymentSuccessOpen,
+        // )
+      },
+    ),
+    removeCartList: create.reducer(state => {
+      state.cartItems = []
+      saveCartState(state.cartItems)
+    }),
   }),
   selectors: {
-    selectCartItems: cart => cart.cartItems,
+    selectCartItems: cart => {
+      console.log("cart items", cart.cartItems)
+      return cart.cartItems
+    },
 
     selectCartItem: (cart, drinkId) =>
       cart.cartItems?.find(item => item.drink?._id === drinkId) || null,
@@ -239,6 +246,7 @@ export const cartSlice = createAppSlice({
     },
 
     selectIsCartComfirmationOpen: cart => cart.isCartComfirmationOpen,
+    selectIsPaymentSuccessOpen: cart => cart.isPaymentSuccessOpen,
   },
 })
 
@@ -251,6 +259,8 @@ export const {
   updateNote,
   removeCartItem,
   setIsCartComfirmationOpen,
+  setIsPaymentSuccessOpen,
+  removeCartList,
 } = cartSlice.actions
 
 export const {
@@ -260,4 +270,5 @@ export const {
   selectToppings,
   selectCartTotalPrice,
   selectIsCartComfirmationOpen,
+  selectIsPaymentSuccessOpen,
 } = cartSlice.selectors
