@@ -1,7 +1,7 @@
 import { Search } from "lucide-react"
 import { useState } from "react"
-import { setSearchKey } from "../../features/drinks/drinkSlice"
-import { useAppDispatch } from "../../app/hooks"
+import { setSearchKey } from "../../../features/drinks/drinkSlice"
+import { useAppDispatch } from "../../../app/hooks"
 
 const SearchBar = () => {
   const dispatch = useAppDispatch()
