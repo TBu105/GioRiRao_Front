@@ -17,7 +17,6 @@ interface NavItemProps {
 const handleLogout = () => {
   localStorage.removeItem("isAuthenticated")
   localStorage.removeItem("accessToken")
-  window.location.href = "/login"
 }
 const NavItem = ({ to, Icon, onClick }: NavItemProps) => (
   <NavLink
@@ -51,7 +50,7 @@ const Navigation = () => (
 
     {/* Đẩy LogOut xuống dưới */}
     <div className="mt-auto">
-      <NavItem to="/logout" onClick={handleLogout} Icon={LogOut} />
+      <NavItem to="/login" onClick={handleLogout} Icon={LogOut} />
     </div>
   </nav>
 )
