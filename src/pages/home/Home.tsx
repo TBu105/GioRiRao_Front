@@ -1,7 +1,7 @@
 import React from "react"
 import CategoriesList from "../../features/drinks/components/CategoriesList"
 import DrinksList from "../../features/drinks/components/DrinksList"
-import SearchBar from "./SearchBar"
+import SearchBar from "./components/SearchBar"
 import formattedDate from "../../utils/getCurrentDate"
 import { useAppSelector } from "../../app/hooks"
 import { selectIsDrinkDetailOpen } from "../../features/drinks/drinkSlice"
